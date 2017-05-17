@@ -46,11 +46,10 @@ def mushrain():
     mushx = random.randint(0, 372)
     mushy = 0
     speed = 64
+    # mushspawn = USEREVENT + 1
 
-
-    for fallingdown in range(1):
-        screen.blit(mushroom, (mushx, mushy))
-        mushy = mushy - speed
+    for fallingdown in range(9):
+        screen.blit(mushroom, (mushx,mushy))
 
 
 while running:
