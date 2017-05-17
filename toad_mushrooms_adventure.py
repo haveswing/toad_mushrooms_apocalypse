@@ -3,6 +3,7 @@ from pygame.locals import *
 import random
 import time
 import os
+import sys
 
 height = 500
 width = 500
@@ -42,62 +43,64 @@ countery = 14
 
 
 def mushrain():
-  mushx = random.randint(0, 372)
-  mushy = 0
-  for fallingdown in range(42):
-    screen.blit(mushroom, (mushx, mushy))
-    fall = mushy - 128
-    screen.blit(mushroom, (mushx, fall))
-    fall = fall - 128
+    mushx = random.randint(0, 372)
+    mushy = 0
+    speed = 64
+
+
+    for fallingdown in range(1):
+        screen.blit(mushroom, (mushx, mushy))
+        mushy = mushy - speed
+
 
 while running:
-  for event in pygame.event.get():
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            running = 0
+        else:
+            print(event)
+
+    ipercolorA = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+    ipercolorB = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+
+    clock = pygame.time.Clock()
+    clock.tick(fps)
+
+    # psybackground:
+    # screen.fill(ipercolorA)
+    # pygame.display.flip()
+    # screen.fill(ipercolorB)
+    # pygame.display.flip()
+
+    countersurface = font.render(str(counter), False, (255, 255, 255))
+
+    screen.blit(background, (0, 0))
+    # screen.blit(mushroom, (mushx, mushy))
+    mushrain()
+    screen.blit(toad, (toadx, toady))
+    screen.blit(countersurface, (counterx, countery))
+    pygame.display.update()
+
+    for event in pygame.event.get():
+        if event.type == KEYDOWN:
+            if event.key == K_a:
+                toadx -= movement
+                counter -= 1
+            if event.key == K_d:
+                toadx += movement
+                counter += 1
+            if event.key == K_w:
+                # toady -= movement
+                print("W key is disabled.")
+            if event.key == K_s:
+                # toady += movement
+                print("S key is disabled.")
+
+        if toadx < -64:
+            toadx = toadx + 42
+        if toadx > 423:
+            toadx = toadx - 42
+
     if event.type == QUIT:
-      running = 0
-    else:
-      print(event)
-
-  ipercolorA = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-  ipercolorB = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-
-  clock = pygame.time.Clock()
-  clock.tick(fps)
-
-  # psybackground:
-  # screen.fill(ipercolorA)
-  # pygame.display.flip()
-  # screen.fill(ipercolorB)
-  # pygame.display.flip()
-
-  countersurface = font.render(str(counter), False, (255, 255, 255))
-
-  screen.blit(background, (0, 0))
-  # screen.blit(mushroom, (mushx, mushy))
-  mushrain()
-  screen.blit(toad, (toadx, toady))
-  screen.blit(countersurface, (counterx, countery))
-  pygame.display.update()
-
-  for event in pygame.event.get():
-    if event.type == KEYDOWN:
-      if event.key == K_a:
-        toadx -= movement
-        counter -= 1
-      if event.key == K_d:
-        toadx += movement
-        counter += 1
-      if event.key == K_w:
-        # toady -= movement
-        print("W key is disabled.")
-      if event.key == K_s:
-        # toady += movement
-        print("S key is disabled.")
-
-    if toadx < -64:
-      toadx = toadx + 42
-    if toadx > 423:
-      toadx = toadx - 42
-
-  if event.type == QUIT:
-    pygame.quit()
-    exit()
+        pygame.quit()
+        exit()
