@@ -10,7 +10,7 @@ width = 500
 
 pygame.init()
 pygame.font.init()
-font = pygame.font.SysFont('Comic Sans MS', 30)
+font = pygame.font.SysFont('Impact', 50)
 screen = pygame.display.set_mode((height, width))
 # screen.set_caption("Toad Mushroom Experience")
 
