@@ -12,7 +12,12 @@ pygame.init()
 pygame.font.init()
 font = pygame.font.SysFont('Impact', 50)
 screen = pygame.display.set_mode((height, width))
-# screen.set_caption("Toad Mushroom Experience")
+pygame.mixer.init()
+playlist = ["ost.mid","ost1.mid","ost2.MID"]
+select = (random.choice(playlist))
+pygame.mixer.music.load(select)
+pygame.mixer.music.play()
+# screen.set_caption("Toad Mushrooms Adventure")
 
 running = 1
 fps = 30
