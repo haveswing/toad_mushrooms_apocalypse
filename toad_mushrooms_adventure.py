@@ -16,7 +16,10 @@ pygame.mixer.init()
 playlist = ["ost.mid","ost1.mid","ost2.MID"]
 select = (random.choice(playlist))
 pygame.mixer.music.load(select)
-pygame.mixer.music.play()
+p_ing = True
+if p_ing:
+    for i in range(3):
+        pygame.mixer.music.play()
 # screen.set_caption("Toad Mushrooms Adventure")
 
 running = 1
