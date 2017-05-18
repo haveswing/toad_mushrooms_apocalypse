@@ -29,7 +29,8 @@ background = pygame.image.load("background.gif")
 
 mushroom = pygame.image.load("mushroom.gif")
 mushx = random.randint(0, 372)
-mushy = 0
+mushy = -64
+speed = 64
 
 toad = pygame.image.load("toad.gif")
 toadx = 423 / 2
@@ -42,14 +43,15 @@ counterx = 14
 countery = 14
 
 
-def mushrain():
-    mushx = random.randint(0, 372)
-    mushy = 0
-    speed = 64
-    # mushspawn = USEREVENT + 1
-
-    for fallingdown in range(9):
-        screen.blit(mushroom, (mushx,mushy))
+def mushrain(mushx,mushy):
+    for fallingdown in range(1):
+        print("new mushroom.")
+        # mushspawn = USEREVENT + 1
+        if mushy > -65 and mushy < 900:
+            mushy = mushy + speed
+            screen.blit(mushroom, (mushx, mushy))
+        else:
+            mushy = 0
 
 
 while running:
@@ -75,7 +77,7 @@ while running:
 
     screen.blit(background, (0, 0))
     # screen.blit(mushroom, (mushx, mushy))
-    mushrain()
+    mushrain(random.randint(0, 372),-64)
     screen.blit(toad, (toadx, toady))
     screen.blit(countersurface, (counterx, countery))
     pygame.display.update()
