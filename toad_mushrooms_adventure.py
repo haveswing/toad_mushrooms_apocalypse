@@ -19,7 +19,7 @@ pygame.mixer.music.load(select)
 p_ing = True
 if p_ing:
     for i in range(3):
-        pygame.mixer.music.play()
+        pygame.mixer.music.play(-1)
 # screen.set_caption("Toad Mushrooms Adventure")
 
 running = 1
