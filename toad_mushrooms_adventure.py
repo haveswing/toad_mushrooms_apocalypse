@@ -88,6 +88,11 @@ while running:
         mushx = random.randint(0, 372)
         mushy = -64
 
+    # collisions:
+    if toadx >= mushx-64 and toadx <= mushx+64:
+        if toady >= mushy-64 and toady <= mushy+64:
+            print("OUCH!")
+
     screen.blit(countersurface, (counterx, countery))
     pygame.display.update()
 
