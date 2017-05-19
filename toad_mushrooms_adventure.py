@@ -20,6 +20,8 @@ p_ing = True
 if p_ing:
     for i in range(3):
         pygame.mixer.music.play(-1)
+effect = pygame.mixer.Sound('jumpwav.wav')
+effect1 = pygame.mixer.Sound('ouch.wav')
 # screen.set_caption("Toad Mushrooms Adventure")
 
 running = 1
@@ -43,7 +45,7 @@ speed = 64
 toad = pygame.image.load("toad.gif")
 toadx = 423 / 2
 toady = 355
-movement = 64
+movement = 84
 
 
 lifex = 100
@@ -97,6 +99,7 @@ while running:
     if toadx >= mushx-64 and toadx <= mushx+64:
         if toady >= mushy-64 and toady <= mushy+64:
             lifex -= 10
+            effect1.play()
             print("OUCH!")
 
     if lifex <= 0:
@@ -111,8 +114,10 @@ while running:
         if event.type == KEYDOWN:
             if event.key == K_a:
                 toadx -= movement
+                effect.play()
             if event.key == K_d:
                 toadx += movement
+                effect.play()
             if event.key == K_w:
                 # toady -= movement
                 print("W key is disabled.")
