@@ -51,17 +51,6 @@ counterx = 14
 countery = 14
 
 
-def mushrain(mushx,mushy):
-    for fallingdown in range(1):
-        print("new mushroom.")
-        # mushspawn = USEREVENT + 1
-        if mushy > -65 and mushy < 900:
-            mushy = mushy + speed
-            screen.blit(mushroom, (mushx, mushy))
-        else:
-            mushy = 0
-
-
 while running:
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -84,9 +73,19 @@ while running:
     countersurface = font.render(str(counter), False, (255, 255, 255))
 
     screen.blit(background, (0, 0))
-    # screen.blit(mushroom, (mushx, mushy))
-    mushrain(random.randint(0, 372),-64)
     screen.blit(toad, (toadx, toady))
+
+    # mushrain:
+    if mushy > -65 and mushy < 4200:
+        screen.blit(mushroom, (mushx, mushy))
+        mushy = mushy + speed
+        mushroom = pygame.transform.rotate(mushroom, 90)
+        if mushy == 576:
+            counter += 1
+    else:
+        mushx = random.randint(0, 372)
+        mushy = -64
+
     screen.blit(countersurface, (counterx, countery))
     pygame.display.update()
 
@@ -94,10 +93,8 @@ while running:
         if event.type == KEYDOWN:
             if event.key == K_a:
                 toadx -= movement
-                counter -= 1
             if event.key == K_d:
                 toadx += movement
-                counter += 1
             if event.key == K_w:
                 # toady -= movement
                 print("W key is disabled.")
