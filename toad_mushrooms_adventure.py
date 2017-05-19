@@ -85,7 +85,7 @@ while running:
     rollingdir = random.choice(rolling)
 
     # mushrain:
-    if mushy > -65 and mushy < 4200:
+    if mushy > -65 and mushy < 3000:
         screen.blit(mushroom, (mushx, mushy))
         mushy = mushy + speed
         mushroom = pygame.transform.rotate(mushroom, rollingdir)
@@ -102,8 +102,19 @@ while running:
             effect1.play()
             print("OUCH!")
 
+    # hallucinations:
+    if lifex <= 20:
+        ipercolorA = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        ipercolorB = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        hallu = pygame.Surface((width, height))
+        hallu.set_alpha(142)
+        hallu.fill(ipercolorA)
+        screen.blit(hallu, (0, 0))
+        hallu.fill(ipercolorB)
+        screen.blit(hallu, (0, 0))
+
     if lifex <= 0:
-        print("GAMEOVER!")
+        print("GAME OVER!")
 
     pygame.draw.rect(screen, black, (lifeposx-5, lifeposy-5, 110, 30))
     pygame.draw.rect(screen, green, (lifeposx, lifeposy, lifex, lifey))
@@ -125,10 +136,15 @@ while running:
                 # toady += movement
                 print("S key is disabled.")
 
+        # bounce:
         if toadx < -64:
             toadx = toadx + 42
+            effect1.play()
+            lifex -= 0.5
         if toadx > 423:
             toadx = toadx - 42
+            effect1.play()
+            lifex -= 0.5
 
     if event.type == QUIT:
         pygame.quit()
