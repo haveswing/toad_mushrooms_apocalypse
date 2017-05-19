@@ -74,12 +74,14 @@ while running:
 
     screen.blit(background, (0, 0))
     screen.blit(toad, (toadx, toady))
+    rolling = [-90,90]
+    rollingdir = random.choice(rolling)
 
     # mushrain:
     if mushy > -65 and mushy < 4200:
         screen.blit(mushroom, (mushx, mushy))
         mushy = mushy + speed
-        mushroom = pygame.transform.rotate(mushroom, 90)
+        mushroom = pygame.transform.rotate(mushroom, rollingdir)
         if mushy == 576:
             counter += 1
     else:
