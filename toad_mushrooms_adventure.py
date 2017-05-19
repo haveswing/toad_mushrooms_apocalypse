@@ -57,95 +57,118 @@ counter = 0
 counterx = 14
 countery = 14
 
+def startscreen():
+    running = 1
+    while running:
+        clock = pygame.time.Clock()
+        clock.tick(fps)
+        startbackground = pygame.image.load("startbg.gif")
+        sbx = 0
+        sby = 0
 
-while running:
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            running = 0
-        else:
-            print(event)
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                running = 0
+            else:
+                print(event)
 
-    ipercolorA = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-    ipercolorB = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        screen.blit(startbackground, (sbx, sby))
 
-    clock = pygame.time.Clock()
-    clock.tick(fps)
+        pygame.display.update()
 
-    # psybackground:
-    # screen.fill(ipercolorA)
-    # pygame.display.flip()
-    # screen.fill(ipercolorB)
-    # pygame.display.flip()
+def gameloop(counter=counter,lifex=lifex,toadx=toadx,mushy=mushy,mushroom=mushroom,mushx=mushx):
+    running = 1
+    while running:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                running = 0
+            else:
+                print(event)
 
-    countersurface = font.render(str(counter), False, (255, 255, 255))
-
-    screen.blit(background, (0, 0))
-    screen.blit(toad, (toadx, toady))
-    rolling = [-90,90]
-    rollingdir = random.choice(rolling)
-
-    # mushrain:
-    if mushy > -65 and mushy < 3000:
-        screen.blit(mushroom, (mushx, mushy))
-        mushy = mushy + speed
-        mushroom = pygame.transform.rotate(mushroom, rollingdir)
-        if mushy == 576:
-            counter += 1
-    else:
-        mushx = random.randint(0, 372)
-        mushy = -64
-
-    # collisions:
-    if toadx >= mushx-64 and toadx <= mushx+64:
-        if toady >= mushy-64 and toady <= mushy+64:
-            lifex -= 10
-            effect1.play()
-            print("OUCH!")
-
-    # hallucinations:
-    if lifex <= 20:
         ipercolorA = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         ipercolorB = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-        hallu = pygame.Surface((width, height))
-        hallu.set_alpha(128)
-        hallu.fill(ipercolorA)
-        screen.blit(hallu, (0, 0))
-        hallu.fill(ipercolorB)
-        screen.blit(hallu, (0, 0))
 
-    if lifex <= 0:
-        print("GAME OVER!")
+        clock = pygame.time.Clock()
+        clock.tick(fps)
 
-    pygame.draw.rect(screen, black, (lifeposx-5, lifeposy-5, 110, 30))
-    pygame.draw.rect(screen, green, (lifeposx, lifeposy, lifex, lifey))
-    screen.blit(countersurface, (counterx, countery))
-    pygame.display.update()
+        # psybackground:
+        # screen.fill(ipercolorA)
+        # pygame.display.flip()
+        # screen.fill(ipercolorB)
+        # pygame.display.flip()
 
-    for event in pygame.event.get():
-        if event.type == KEYDOWN:
-            if event.key == K_a:
-                toadx -= movement
-                effect.play()
-            if event.key == K_d:
-                toadx += movement
-                effect.play()
-            if event.key == K_w:
-                # toady -= movement
-                print("W key is disabled.")
-            if event.key == K_s:
-                # toady += movement
-                print("S key is disabled.")
+        countersurface = font.render(str(counter), False, (255, 255, 255))
 
-        # bounce:
-        if toadx < -64:
-            toadx = toadx + 42
-            effect1.play()
-            lifex -= 0.5
-        if toadx > 423:
-            toadx = toadx - 42
-            effect1.play()
-            lifex -= 0.5
+        screen.blit(background, (0, 0))
+        screen.blit(toad, (toadx, toady))
+        rolling = [-90,90]
+        rollingdir = random.choice(rolling)
 
-    if event.type == QUIT:
-        pygame.quit()
-        exit()
+        # mushrain:
+        if mushy > -65 and mushy < 3000:
+            screen.blit(mushroom, (mushx, mushy))
+            mushy = mushy + speed
+            mushroom = pygame.transform.rotate(mushroom, rollingdir)
+            if mushy == 576:
+                counter += 1
+        else:
+            mushx = random.randint(0, 372)
+            mushy = -64
+
+        # collisions:
+        if toadx >= mushx-64 and toadx <= mushx+64:
+            if toady >= mushy-64 and toady <= mushy+64:
+                lifex -= 10
+                effect1.play()
+                print("OUCH!")
+
+        # hallucinations:
+        if lifex <= 20:
+            ipercolorA = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+            ipercolorB = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+            hallu = pygame.Surface((width, height))
+            hallu.set_alpha(128)
+            hallu.fill(ipercolorA)
+            screen.blit(hallu, (0, 0))
+            hallu.fill(ipercolorB)
+            screen.blit(hallu, (0, 0))
+
+        if lifex <= 0:
+            print("GAME OVER!")
+
+        pygame.draw.rect(screen, black, (lifeposx-5, lifeposy-5, 110, 30))
+        pygame.draw.rect(screen, green, (lifeposx, lifeposy, lifex, lifey))
+        screen.blit(countersurface, (counterx, countery))
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == KEYDOWN:
+                if event.key == K_a:
+                    toadx -= movement
+                    effect.play()
+                if event.key == K_d:
+                    toadx += movement
+                    effect.play()
+                if event.key == K_w:
+                    # toady -= movement
+                    print("W key is disabled.")
+                if event.key == K_s:
+                    # toady += movement
+                    print("S key is disabled.")
+
+            # bounce:
+            if toadx < -64:
+                toadx = toadx + 42
+                effect1.play()
+                lifex -= 0.5
+            if toadx > 423:
+                toadx = toadx - 42
+                effect1.play()
+                lifex -= 0.5
+
+        if event.type == QUIT:
+            pygame.quit()
+            exit()
+
+# startscreen()
+gameloop()
