@@ -107,7 +107,7 @@ while running:
         ipercolorA = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         ipercolorB = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         hallu = pygame.Surface((width, height))
-        hallu.set_alpha(142)
+        hallu.set_alpha(128)
         hallu.fill(ipercolorA)
         screen.blit(hallu, (0, 0))
         hallu.fill(ipercolorB)
