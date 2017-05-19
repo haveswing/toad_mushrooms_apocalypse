@@ -43,8 +43,13 @@ speed = 64
 toad = pygame.image.load("toad.gif")
 toadx = 423 / 2
 toady = 355
-
 movement = 64
+
+
+lifex = 100
+lifey = 20
+lifeposx = 84
+lifeposy = 42
 
 counter = 0
 counterx = 14
@@ -91,8 +96,14 @@ while running:
     # collisions:
     if toadx >= mushx-64 and toadx <= mushx+64:
         if toady >= mushy-64 and toady <= mushy+64:
+            lifex -= 10
             print("OUCH!")
 
+    if lifex <= 0:
+        print("GAMEOVER!")
+
+    pygame.draw.rect(screen, black, (lifeposx-5, lifeposy-5, 110, 30))
+    pygame.draw.rect(screen, green, (lifeposx, lifeposy, lifex, lifey))
     screen.blit(countersurface, (counterx, countery))
     pygame.display.update()
 
