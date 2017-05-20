@@ -11,15 +11,17 @@ width = 500
 pygame.init()
 pygame.font.init()
 font = pygame.font.SysFont('Impact', 50)
-screen = pygame.display.set_mode((height, width))
+font2 = pygame.font.SysFont('Impact', 25)
+screen = pygame.display.set_mode((height, width),FULLSCREEN)
 pygame.mixer.init()
-playlist = ["ost.mid","ost1.mid","ost2.MID"]
+playlist = ["ost.mid","ost1.mid","star.mid"]
 select = (random.choice(playlist))
-pygame.mixer.music.load(select)
-p_ing = True
-if p_ing:
-    for i in range(3):
-        pygame.mixer.music.play(-1)
+# pygame.mixer.music.load(select)
+# p_ing = True
+# if p_ing:
+    # for i in range(3):
+        # pygame.mixer.music.play(-1)
+
 effect = pygame.mixer.Sound('jumpwav.wav')
 effect1 = pygame.mixer.Sound('ouch.wav')
 # screen.set_caption("Toad Mushrooms Adventure")
@@ -35,9 +37,17 @@ green = (0,255,0)
 blue =(0,0,255)
 ipercolor = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
 
-background = pygame.image.load("background.gif")
+startbackground = pygame.image.load("startbgBW2.gif")
+sbx = 0
+sby = 0
 
-mushroom = pygame.image.load("mushroom.gif")
+splash = pygame.image.load("splash.gif")
+
+title = pygame.image.load("title.gif").convert_alpha()
+
+background = pygame.image.load("backgroundBW.gif")
+
+mushroom = pygame.image.load("mushroomBW.gif")
 mushx = random.randint(0, 372)
 mushy = -64
 speed = 64
@@ -46,6 +56,7 @@ toad = pygame.image.load("toad.gif")
 toadx = 423 / 2
 toady = 355
 movement = 84
+jump = 90
 
 
 lifex = 100
@@ -57,33 +68,63 @@ counter = 0
 counterx = 14
 countery = 14
 
-def startscreen():
-    running = 1
-    while running:
+gover = pygame.image.load("gover.gif")
+
+def startscreen(sbx=sbx):
+    srunning = 1
+    pygame.mixer.music.load("ost2.MID")
+    pygame.mixer.music.play(-1)
+    while srunning:
         clock = pygame.time.Clock()
         clock.tick(fps)
-        startbackground = pygame.image.load("startbg.gif")
-        sbx = 0
-        sby = 0
 
         for event in pygame.event.get():
             if event.type == QUIT:
-                running = 0
+                srunning = 0
             else:
                 print(event)
+
+        if sbx >= -999:
+            sbx -= 0.5
+            print("scrolling!")
+
+        if event.type == KEYDOWN:
+            if event.key == K_SPACE:
+                srunning = 0
+                pygame.mixer.music.stop()
+                gameloop()
+
+            if event.key == K_ESCAPE:
+                srunning = 0
+                pygame.quit()
+                exit()
 
         screen.blit(startbackground, (sbx, sby))
 
+        screen.blit(splash, (0, 0))
+
+        screen.blit(title, (0, 10))
+
+        pygame.display.flip()
+
         pygame.display.update()
 
-def gameloop(counter=counter,lifex=lifex,toadx=toadx,mushy=mushy,mushroom=mushroom,mushx=mushx):
+def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mushroom=mushroom,mushx=mushx,jump=jump):
     running = 1
+    pygame.mixer.init()
+    playlist = ["ost.mid","12f.mid","star.mid"]
+    select = (random.choice(playlist))
+    pygame.mixer.music.load(select)
+    pygame.mixer.music.play(-1)
+
+
     while running:
         for event in pygame.event.get():
             if event.type == QUIT:
                 running = 0
             else:
                 print(event)
+
 
         ipercolorA = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         ipercolorB = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
@@ -105,7 +146,7 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,mushy=mushy,mushroom=mushro
         rollingdir = random.choice(rolling)
 
         # mushrain:
-        if mushy > -65 and mushy < 3000:
+        if mushy > -65 and mushy < 1500:
             screen.blit(mushroom, (mushx, mushy))
             mushy = mushy + speed
             mushroom = pygame.transform.rotate(mushroom, rollingdir)
@@ -127,14 +168,17 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,mushy=mushy,mushroom=mushro
             ipercolorA = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             ipercolorB = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             hallu = pygame.Surface((width, height))
-            hallu.set_alpha(128)
+            hallu.set_alpha(32)
             hallu.fill(ipercolorA)
             screen.blit(hallu, (0, 0))
             hallu.fill(ipercolorB)
             screen.blit(hallu, (0, 0))
+            hallutag = font2.render(str("*poisoned*"), False, ipercolor)
+            screen.blit(hallutag, (200, 36))
 
         if lifex <= 0:
             print("GAME OVER!")
+
 
         pygame.draw.rect(screen, black, (lifeposx-5, lifeposy-5, 110, 30))
         pygame.draw.rect(screen, green, (lifeposx, lifeposy, lifex, lifey))
@@ -150,11 +194,20 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,mushy=mushy,mushroom=mushro
                     toadx += movement
                     effect.play()
                 if event.key == K_w:
-                    # toady -= movement
-                    print("W key is disabled.")
+                    if toady == 355:
+                        effect.play()
+                        print("JUMP!")
+                        for j1 in range(900):
+                            toady -= 0.1
+                        for d1 in range(900):
+                            toady += 0.1
                 if event.key == K_s:
                     # toady += movement
                     print("S key is disabled.")
+                if event.key == K_ESCAPE:
+                    running = 0
+                    pygame.quit()
+                    exit()
 
             # bounce:
             if toadx < -64:
@@ -166,9 +219,52 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,mushy=mushy,mushroom=mushro
                 effect1.play()
                 lifex -= 0.5
 
-        if event.type == QUIT:
-            pygame.quit()
-            exit()
+            # game over:
+            if lifex <= 0:
+                running = 0
+                gameover(countersurface)
 
-# startscreen()
-gameloop()
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+
+def gameover(countersurface):
+    drunning = 1
+    pygame.mixer.music.load("ost2.MID")
+    pygame.mixer.music.play(-1)
+    while drunning:
+        clock = pygame.time.Clock()
+        clock.tick(fps)
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                srunning = 0
+            else:
+                print(event)
+
+            if event.type == KEYDOWN:
+                if event.key == K_SPACE:
+                    srunning = 0
+                    pygame.mixer.music.stop()
+                    startscreen()
+
+                if event.key == K_ESCAPE:
+                    drunning = 0
+                    pygame.quit()
+                    exit()
+
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+            for event in pygame.event.get():
+                if event.type == KEYDOWN:
+                    if event.key == K_SPACE:
+                        startscreen()
+        screen.blit(background, (0, 0))
+        screen.blit(gover, (100, 0))
+        screen.blit(countersurface, (counterx, countery))
+        pygame.display.update()
+
+startscreen()
+# gameloop()
+# gameover()
