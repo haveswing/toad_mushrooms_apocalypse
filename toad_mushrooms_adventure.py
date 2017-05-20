@@ -37,7 +37,7 @@ green = (0,255,0)
 blue =(0,0,255)
 ipercolor = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
 
-startbackground = pygame.image.load("startbgBW2.gif")
+startbackground = pygame.image.load("startbgBW3.gif")
 sbx = 0
 sby = 0
 
@@ -85,7 +85,7 @@ def startscreen(sbx=sbx):
                 print(event)
 
         if sbx >= -999:
-            sbx -= 0.5
+            sbx -= 2.5
             print("scrolling!")
 
         if event.type == KEYDOWN:
@@ -168,7 +168,7 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
             ipercolorA = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             ipercolorB = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             hallu = pygame.Surface((width, height))
-            hallu.set_alpha(32)
+            hallu.set_alpha(16)
             hallu.fill(ipercolorA)
             screen.blit(hallu, (0, 0))
             hallu.fill(ipercolorB)
