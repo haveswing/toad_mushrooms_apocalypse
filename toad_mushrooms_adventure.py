@@ -9,6 +9,10 @@ height = 500
 width = 500
 
 pygame.init()
+pygame.mouse.set_visible(False)
+pygame.display.set_caption('Toad Mushrooms Apocalypse')
+icon = pygame.image.load("icon.gif")
+pygame.display.set_icon(icon)
 pygame.font.init()
 font = pygame.font.SysFont('Impact', 50)
 font2 = pygame.font.SysFont('Impact', 25)
@@ -50,7 +54,7 @@ background = pygame.image.load("backgroundBW.gif")
 mushroom = pygame.image.load("mushroomBW.gif")
 mushx = random.randint(0, 372)
 mushy = -64
-speed = 64
+speed = 32
 
 toad = pygame.image.load("toad.gif")
 toadx = 423 / 2
@@ -146,7 +150,7 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
         rollingdir = random.choice(rolling)
 
         # mushrain:
-        if mushy > -65 and mushy < 1500:
+        if mushy > -65 and mushy < 600:
             screen.blit(mushroom, (mushx, mushy))
             mushy = mushy + speed
             mushroom = pygame.transform.rotate(mushroom, rollingdir)
