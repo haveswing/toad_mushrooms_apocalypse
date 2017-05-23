@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import random
 import time
+import threading
 import os
 import sys
 
@@ -61,7 +62,9 @@ toadx = 423 / 2
 toady = 355
 movement = 84
 jump = 90
-
+charging = False
+toadcharge = pygame.image.load("toadcharge.gif")
+time_counter = 0
 
 lifex = 100
 lifey = 20
@@ -73,6 +76,9 @@ counterx = 14
 countery = 14
 
 gover = pygame.image.load("gover.gif")
+
+def uncharger():
+    charging = False
 
 def startscreen(sbx=sbx):
     srunning = 1
@@ -114,7 +120,7 @@ def startscreen(sbx=sbx):
 
         pygame.display.update()
 
-def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mushroom=mushroom,mushx=mushx,jump=jump):
+def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mushroom=mushroom,mushx=mushx,jump=jump,charging=charging,time_counter=time_counter):
     running = 1
     pygame.mixer.init()
     playlist = ["ost.mid","12f.mid","star.mid"]
@@ -129,7 +135,6 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
                 running = 0
             else:
                 print(event)
-
 
         ipercolorA = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         ipercolorB = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
@@ -147,6 +152,10 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
 
         screen.blit(background, (0, 0))
         screen.blit(toad, (toadx, toady))
+
+        if charging == True:
+            screen.blit(toadcharge, (toadx, toady))
+
         rolling = [-90,90]
         rollingdir = random.choice(rolling)
 
@@ -207,12 +216,21 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
                         for d1 in range(900):
                             toady += 0.1
                 if event.key == K_s:
-                    # toady += movement
-                    print("S key is disabled.")
+                    if lifex <= 99:
+                        effect1.play()
+                        lifex += 0.5
+                        charging = True
+                        # time_counter = clock.tick()
+                        # if time_counter > 250:
+                            # print("uncharging...")
+                            # charging = False
+                            # time_counter = 0
+                        charging = False
+
+
                 if event.key == K_ESCAPE:
                     running = 0
-                    pygame.quit()
-                    exit()
+                    startscreen()
 
             # bounce:
             if toadx < -64:
@@ -255,8 +273,7 @@ def gameover(countersurface):
 
                 if event.key == K_ESCAPE:
                     drunning = 0
-                    pygame.quit()
-                    exit()
+                    startscreen()
 
             if event.type == QUIT:
                 pygame.quit()
