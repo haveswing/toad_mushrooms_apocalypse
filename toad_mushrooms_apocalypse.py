@@ -10,6 +10,9 @@ height = 500
 width = 500
 
 pygame.init()
+clock = pygame.time.Clock()
+fps = 30
+clock.tick(fps)
 pygame.mouse.set_visible(False)
 pygame.display.set_caption('Toad Mushrooms Apocalypse')
 icon = pygame.image.load("icon.gif")
@@ -34,7 +37,6 @@ effect2 = pygame.mixer.Sound('LASRFAST.wav')
 # screen.set_caption("Toad Mushrooms Adventure")
 
 running = 1
-fps = 30
 
 #colors:
 black = (0,0,0)
@@ -80,7 +82,13 @@ countery = 14
 gover = pygame.image.load("gover.gif")
 
 def uncharger():
-    charging = False
+    time_counter = clock.tick()
+    time_holder = time_counter
+    print(time_counter)
+    if time_counter != time_holder:
+        print("uncharging...")
+        charging = False
+        time_counter = 0
 
 def startscreen(sbx=sbx):
     srunning = 1
@@ -220,15 +228,9 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
                 if event.key == K_s:
                     if lifex <= 99:
                         effect2.play(1, fade_ms=1500)
-                        lifex += 0.5
+                        lifex += 0.25
                         charging = True
-                        # time_counter = clock.tick()
-                        # if time_counter > 250:
-                            # print("uncharging...")
-                            # charging = False
-                            # time_counter = 0
-                        charging = False
-
+                        uncharger()
 
                 if event.key == K_ESCAPE:
                     running = 0
