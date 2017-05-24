@@ -29,6 +29,8 @@ select = (random.choice(playlist))
 
 effect = pygame.mixer.Sound('jumpwav.wav')
 effect1 = pygame.mixer.Sound('ouch.wav')
+effect2 = pygame.mixer.Sound('LASRFAST.wav')
+
 # screen.set_caption("Toad Mushrooms Adventure")
 
 running = 1
@@ -217,7 +219,7 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
                             toady += 0.1
                 if event.key == K_s:
                     if lifex <= 99:
-                        effect1.play()
+                        effect2.play(1, fade_ms=1500)
                         lifex += 0.5
                         charging = True
                         # time_counter = clock.tick()
