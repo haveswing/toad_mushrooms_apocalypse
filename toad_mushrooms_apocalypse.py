@@ -59,7 +59,7 @@ background = pygame.image.load("backgroundBW.gif")
 mushroom = pygame.image.load("mushroomBW.gif")
 mushx = random.randint(0, 372)
 mushy = -64
-speed = 32
+speed = 0
 
 toad = pygame.image.load("toad.gif")
 toadx = 423 / 2
@@ -69,6 +69,7 @@ jump = 90
 charging = False
 toadcharge = pygame.image.load("toadcharge.gif")
 time_counter = 0
+time_holder = 0
 
 lifex = 100
 lifey = 20
@@ -89,6 +90,7 @@ def uncharger():
         print("uncharging...")
         charging = False
         time_counter = 0
+        time_holder = 0
 
 def startscreen(sbx=sbx):
     srunning = 1
@@ -130,7 +132,7 @@ def startscreen(sbx=sbx):
 
         pygame.display.update()
 
-def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mushroom=mushroom,mushx=mushx,jump=jump,charging=charging,time_counter=time_counter):
+def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mushroom=mushroom,mushx=mushx,jump=jump,charging=charging,time_counter=time_counter, speed=speed):
     running = 1
     pygame.mixer.init()
     playlist = ["ost.mid","12f.mid","star.mid"]
@@ -200,8 +202,29 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
             hallutag = font2.render(str("*poisoned*"), False, ipercolor)
             screen.blit(hallutag, (200, 36))
 
+        # level:
+        if counter == 0:
+            speed = 4
+        elif counter == 1:
+            speed = 8
+        elif counter == 5:
+            speed = 16
+        elif counter == 10:
+            speed = 32
+        elif counter == 20:
+            speed = 34
+        elif counter == 40:
+            speed = 36
+        elif counter == 50:
+            speed = 38
+        elif counter == 60:
+            speed = 40
+        elif counter == 70:
+            speed = 42
+
         if lifex <= 0:
             print("GAME OVER!")
+            gameover(countersurface)
 
 
         pygame.draw.rect(screen, black, (lifeposx-5, lifeposy-5, 110, 30))
