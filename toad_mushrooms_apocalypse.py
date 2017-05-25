@@ -228,13 +228,13 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
 
         for event in pygame.event.get():
             if event.type == KEYDOWN:
-                if event.key == K_a:
+                if event.key == K_a or event.key == K_LEFT:
                     toadx -= movement
                     effect.play()
-                if event.key == K_d:
+                if event.key == K_d or event.key == K_RIGHT:
                     toadx += movement
                     effect.play()
-                if event.key == K_w:
+                if event.key == K_w or event.key == K_UP:
                     if toady == 355:
                         effect.play()
                         print("JUMP!")
@@ -242,7 +242,7 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
                             toady -= 0.1
                         for d1 in range(900):
                             toady += 0.1
-                if event.key == K_s:
+                if event.key == K_s or event.key == K_DOWN:
                     if lifex <= 99:
                         now = time_counter + cooldown
                         effect2.play(1, fade_ms=1500)
