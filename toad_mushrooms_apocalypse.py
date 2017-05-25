@@ -84,9 +84,11 @@ countery = 14
 gover = pygame.image.load("gover.gif")
 
 
-def uncharger(time_counter, now, cooldown):
-    now = time_counter + cooldown
-    if time_counter >= now:
+
+def uncharger(self):
+    self.cooldown = 300
+    self.now = time_counter + self.cooldown
+    if time_counter >= self.now:
         charging = False
 
 def startscreen(sbx=sbx):
@@ -243,7 +245,7 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
                         effect2.play(1, fade_ms=1500)
                         lifex += 0.25
                         charging = True
-                        uncharger(time_counter, now, cooldown)
+                        uncharger()
 
                 if event.key == K_ESCAPE:
                     running = 0
