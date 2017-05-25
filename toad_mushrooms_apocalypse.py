@@ -68,8 +68,9 @@ movement = 84
 jump = 90
 charging = False
 toadcharge = pygame.image.load("toadcharge.gif")
+cooldown = 300
 time_counter = 0
-time_holder = 0
+now = 0
 
 lifex = 100
 lifey = 20
@@ -82,15 +83,11 @@ countery = 14
 
 gover = pygame.image.load("gover.gif")
 
-def uncharger():
-    time_counter = clock.tick()
-    time_holder = time_counter
-    print(time_counter)
-    if time_counter != time_holder:
-        print("uncharging...")
+
+def uncharger(time_counter, now, cooldown):
+    now = time_counter + cooldown
+    if time_counter >= now:
         charging = False
-        time_counter = 0
-        time_holder = 0
 
 def startscreen(sbx=sbx):
     srunning = 1
@@ -132,7 +129,7 @@ def startscreen(sbx=sbx):
 
         pygame.display.update()
 
-def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mushroom=mushroom,mushx=mushx,jump=jump,charging=charging,time_counter=time_counter, speed=speed):
+def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mushroom=mushroom,mushx=mushx,jump=jump,charging=charging, speed=speed,now=now):
     running = 1
     pygame.mixer.init()
     playlist = ["ost.mid","12f.mid","star.mid"]
@@ -153,6 +150,7 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
 
         clock = pygame.time.Clock()
         clock.tick(fps)
+        time_counter = pygame.time.get_ticks()
 
         # psybackground:
         # screen.fill(ipercolorA)
@@ -168,7 +166,7 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
         if charging == True:
             screen.blit(toadcharge, (toadx, toady))
 
-        rolling = [-90,90]
+        rolling = [-90,90,0,0,0,0,0,0,0]
         rollingdir = random.choice(rolling)
 
         # mushrain:
@@ -211,16 +209,7 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
             speed = 16
         elif counter == 10:
             speed = 32
-        elif counter == 20:
-            speed = 34
-        elif counter == 40:
-            speed = 36
-        elif counter == 50:
-            speed = 38
-        elif counter == 60:
-            speed = 40
-        elif counter == 70:
-            speed = 42
+
 
         if lifex <= 0:
             print("GAME OVER!")
@@ -250,10 +239,11 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
                             toady += 0.1
                 if event.key == K_s:
                     if lifex <= 99:
+                        now = time_counter + cooldown
                         effect2.play(1, fade_ms=1500)
                         lifex += 0.25
                         charging = True
-                        uncharger()
+                        uncharger(time_counter, now, cooldown)
 
                 if event.key == K_ESCAPE:
                     running = 0
