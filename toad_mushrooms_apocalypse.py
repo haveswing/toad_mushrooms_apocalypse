@@ -248,7 +248,12 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
                         effect2.play(1, fade_ms=1500)
                         lifex += 0.25
                         charging = True
-                        # Theuncharger.uncharger()
+                        # Theuncharger.__init__(self)
+                        #Theuncharger.uncharger(self)
+                        unc1 = Theuncharger.__init__()
+                        unc2 = Theuncharger.uncharger()
+                        unc1.__init__()
+                        unc2.uncharger()
 
                 if event.key == K_ESCAPE:
                     running = 0
