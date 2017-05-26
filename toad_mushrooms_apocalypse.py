@@ -86,13 +86,14 @@ gover = pygame.image.load("gover.gif")
 
 class Theuncharger:
     def __init__(self):
-        self.last = pygame.time.get_ticks()
         self.cooldown = 300
+        self.last = pygame.time.get_ticks()
+        print(self.last)
     def uncharger(self):
+        print("uncharging.")
         now = pygame.time.get_ticks()
         if now - self.last >= self.cooldown:
-            self.last = now
-            print("uncharging.")
+            print("verified condition.")
             charging = False
 
 inst = Theuncharger()
