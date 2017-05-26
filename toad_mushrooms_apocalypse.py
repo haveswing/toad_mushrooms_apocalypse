@@ -95,6 +95,7 @@ class Theuncharger:
         now = pygame.time.get_ticks()
         if now - self.last >= self.cooldown:
             print("verified condition.")
+            self.last = now
             charging = False
 
 inst = Theuncharger()
