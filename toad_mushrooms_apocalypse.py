@@ -92,7 +92,11 @@ class Theuncharger:
         now = pygame.time.get_ticks()
         if now - self.last >= self.cooldown:
             self.last = now
+            print("uncharging.")
             charging = False
+
+inst = Theuncharger()
+inst.__init__()
 
 def startscreen(sbx=sbx):
     srunning = 1
@@ -244,16 +248,10 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
                             toady += 0.1
                 if event.key == K_s or event.key == K_DOWN:
                     if lifex <= 99:
-                        now = time_counter + cooldown
                         effect2.play(1, fade_ms=1500)
                         lifex += 0.25
                         charging = True
-                        # Theuncharger.__init__(self)
-                        #Theuncharger.uncharger(self)
-                        # unc1 = Theuncharger.__init__()
-                        # unc2 = Theuncharger.uncharger()
-                        # unc1.__init__()
-                        # unc2.uncharger()
+                        inst.uncharger()
 
                 if event.key == K_ESCAPE:
                     running = 0
