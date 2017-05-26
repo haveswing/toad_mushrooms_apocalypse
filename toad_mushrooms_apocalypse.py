@@ -96,7 +96,6 @@ class Theuncharger:
             charging = False
 
 inst = Theuncharger()
-inst.__init__()
 
 def startscreen(sbx=sbx):
     srunning = 1
@@ -153,6 +152,8 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
                 running = 0
             else:
                 print(event)
+
+        inst.__init__()
 
         ipercolorA = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         ipercolorB = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
