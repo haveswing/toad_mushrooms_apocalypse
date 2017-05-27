@@ -24,7 +24,6 @@ screen = pygame.display.set_mode((height, width),FULLSCREEN)
 pygame.mixer.init()
 playlist = ["ost.mid","ost1.mid","star.mid"]
 select = (random.choice(playlist))
-
 # pygame.mixer.music.load(select)
 # p_ing = True
 # if p_ing:
