@@ -74,7 +74,7 @@ now = 0
 
 lifex = 100
 lifey = 20
-lifeposx = 84
+lifeposx = 200
 lifeposy = 42
 
 counter = 0
@@ -86,7 +86,7 @@ gover = pygame.image.load("gover.gif")
 
 class Theuncharger:
     def __init__(self):
-        self.cooldown = 200
+        self.cooldown = 184
         now = pygame.time.get_ticks()
         print(now)
     def uncharger(self):
@@ -201,13 +201,13 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
             ipercolorA = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             ipercolorB = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             hallu = pygame.Surface((width, height))
-            hallu.set_alpha(16)
+            hallu.set_alpha(64)
             hallu.fill(ipercolorA)
             screen.blit(hallu, (0, 0))
             hallu.fill(ipercolorB)
             screen.blit(hallu, (0, 0))
             hallutag = font2.render(str("*poisoned*"), False, ipercolor)
-            screen.blit(hallutag, (200, 36))
+            screen.blit(hallutag, (314, 36))
 
         # level:
         if counter == 0:
