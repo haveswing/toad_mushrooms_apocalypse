@@ -86,18 +86,15 @@ gover = pygame.image.load("gover.gif")
 
 class Theuncharger:
     def __init__(self):
-        self.cooldown = 300
-        self.last = pygame.time.get_ticks()
-        print(self.last)
+        self.cooldown = 200
+        now = pygame.time.get_ticks()
+        print(now)
     def uncharger(self):
         print("uncharging.")
-        now = pygame.time.get_ticks()
-        if now - self.last >= self.cooldown:
-            print("verified condition.")
-            self.last = now
-            charging = False
+        self.last = pygame.time.get_ticks()
 
-inst = Theuncharger()
+
+unch = Theuncharger()
 
 def startscreen(sbx=sbx):
     srunning = 1
@@ -155,7 +152,7 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
             else:
                 print(event)
 
-        inst.__init__()
+        unch.__init__()
 
         ipercolorA = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         ipercolorB = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
@@ -254,7 +251,11 @@ def gameloop(counter=counter,lifex=lifex,toadx=toadx,toady=toady,mushy=mushy,mus
                         effect2.play(1, fade_ms=1500)
                         lifex += 0.25
                         charging = True
-                        inst.uncharger()
+                        unch.uncharger()
+                        if unch.last >= now + unch.cooldown:
+                            print("verified condition.")
+                            now = unch.last
+                            charging = False
 
                 if event.key == K_ESCAPE:
                     running = 0
